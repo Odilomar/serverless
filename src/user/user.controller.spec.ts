@@ -91,7 +91,7 @@ describe('UserController', () => {
     it('should delete a user', async () => {
       jest.spyOn(userService, 'delete').mockResolvedValue();
 
-      expect(await userController.delete(1)).toBeNull();
+      expect(await userController.delete(1)).toBeUndefined();
     });
   });
 });

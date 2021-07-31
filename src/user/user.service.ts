@@ -67,8 +67,18 @@ export class UserService {
       throw new BadRequestException('Body is empty!');
 
     const user = await this.findOne({ id });
+    if(!user) throw new BadRequestException('User does not exists!');
+
     Object.assign(user, args);
 
     return this.save(user);
+  }
+
+  async delete(id: number) {
+    const user = await this.findOne({ id });
+    if(!user) throw new BadRequestException('User does not exists!');
+      
+    const [userErr] = await to(this.userRepository.delete({ id }));
+    if(!!userErr) throw new InternalServerErrorException(`User was not deleted. Details: ${userErr}`);
   }
 }

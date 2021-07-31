@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   Param,
   ParseIntPipe,
   Post,
@@ -31,6 +32,7 @@ export class UserController {
     return this.userService.findOne({ id });
   }
 
+  @HttpCode(201)
   @Post()
   async create(@Body() user: CreateUserArgs) {
     return this.userService.create(user);
@@ -44,6 +46,7 @@ export class UserController {
     return this.userService.update(id, args);
   }
 
+  @HttpCode(204)
   @Delete('/:id')
   async delete(    
     @Param('id', ParseIntPipe) id: number,

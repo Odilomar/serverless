@@ -87,12 +87,11 @@ describe('UserController', () => {
     });
   });
 
-  // describe('delete', () => {
-  //   it('should return an array of users', async () => {
-  //     const result = {}
-  //     jest.spyOn(userService, 'find').mockResolvedValue(result);
+  describe('delete', () => {
+    it('should delete a user', async () => {
+      jest.spyOn(userService, 'delete').mockResolvedValue();
 
-  //     expect(await userController.findAll()).toBe(result);
-  //   });
-  // });
+      expect(await userController.delete(1)).toBeNull();
+    });
+  });
 });

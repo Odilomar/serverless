@@ -16,6 +16,21 @@ describe('UserController', () => {
     userController = moduleRef.get<UserController>(UserController);
   });
 
+  describe('create', () => {
+    it('should create a user', async () => {
+      const result = {
+        id: 1,
+        name: "Odilomar",
+        idade: 24,
+        cargo: "Programador",
+        created_at: new Date,
+        updated_at: new Date,
+      }
+      jest.spyOn(userService, 'create').mockResolvedValue(result);
+      expect(await userController.create(result)).toBe(result);
+    });
+  });
+
   describe('findAll', () => {
     it('should return an array of users', async () => {
       const result = {
@@ -37,22 +52,6 @@ describe('UserController', () => {
 
       expect(await userController.findAll()).toBe(result);
     });
-  });  
-
-  describe('create', () => {
-    it('should create a user', async () => {
-      const result = {
-        id: 1,
-        name: "Odilomar",
-        idade: 24,
-        cargo: "Programador",
-        created_at: new Date,
-        updated_at: new Date,
-      }
-      jest.spyOn(userService, 'create').mockResolvedValue(result);
-
-      expect(await userController.create(result)).toBe(result);
-    });
   });
 
   describe('findOne', () => {
@@ -64,7 +63,7 @@ describe('UserController', () => {
         cargo: "Programador",
         created_at: new Date,
         updated_at: new Date,
-      }
+      };
       jest.spyOn(userService, 'findOne').mockResolvedValue(result);
 
       expect(await userController.findOne(1)).toBe(result);
@@ -80,7 +79,7 @@ describe('UserController', () => {
         cargo: "Programador",
         created_at: new Date,
         updated_at: new Date,
-      }      
+      }
       jest.spyOn(userService, 'update').mockResolvedValue(result);
 
       expect(await userController.update(result.id, { ...result })).toBe(result);
@@ -91,7 +90,7 @@ describe('UserController', () => {
     it('should delete a user', async () => {
       jest.spyOn(userService, 'delete').mockResolvedValue();
 
-      expect(await userController.delete(1)).toBeUndefined();
+      expect(await userController.delete(18)).toBeUndefined();
     });
   });
 });

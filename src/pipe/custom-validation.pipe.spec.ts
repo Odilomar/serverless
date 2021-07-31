@@ -1,6 +1,6 @@
 import { CustomValidationPipe } from './custom-validation.pipe';
 
-describe('ValidationPipe', () => {
+describe('Custom Validation Pipe', () => {
   it('should be defined', () => {
     expect(new CustomValidationPipe()).toBeDefined();
   });

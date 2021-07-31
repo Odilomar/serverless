@@ -20,6 +20,7 @@ config();
       synchronize: true,
       logging: true,
       dropSchema: false,
+      autoLoadEntities: true,
     }),
     UserModule,
   ],

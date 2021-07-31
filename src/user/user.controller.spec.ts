@@ -71,14 +71,21 @@ describe('UserController', () => {
     });
   });
 
-  // describe('update', () => {
-  //   it('should return an array of users', async () => {
-  //     const result = {}
-  //     jest.spyOn(userService, 'find').mockResolvedValue(result);
+  describe('update', () => {
+    it('should update a user', async () => {
+      const result = {
+        id: 1,
+        name: "Odilomar",
+        idade: 24,
+        cargo: "Programador",
+        created_at: new Date,
+        updated_at: new Date,
+      }      
+      jest.spyOn(userService, 'update').mockResolvedValue(result);
 
-  //     expect(await userController.findAll()).toBe(result);
-  //   });
-  // });
+      expect(await userController.update(result.id, { ...result })).toBe(result);
+    });
+  });
 
   // describe('delete', () => {
   //   it('should return an array of users', async () => {

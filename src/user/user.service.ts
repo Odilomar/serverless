@@ -8,7 +8,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import to from 'await-to-js';
 import { FindConditions, ObjectLiteral, Repository } from 'typeorm';
 import { CreateUserArgs, FindUserArgs, UpdateUserArgs } from './user.args';
-import { BODYISEMPTY, USERNOTFOUND, USERWASNOTDELETED, USERWASNOTSAVED } from './user.const';
+import {
+  BODYISEMPTY,
+  USERNOTFOUND,
+  USERWASNOTDELETED,
+  USERWASNOTSAVED,
+} from './user.const';
 import { UserORM } from './user.entity';
 
 export const DEFAULT_TAKE = 5;
@@ -46,21 +51,25 @@ export class UserService {
   }
 
   async find({ take, skip, ...args }: FindUserArgs) {
+    const takeUser = Number(take || DEFAULT_TAKE);
+    const skipUser = Number(skip || DEFAULT_SKIP);
+
     const keys = Object.keys(args);
     const where = await Promise.all(
       keys.map((key) => JSON.parse(`{ "${key}": "${args[key]}" }`)),
     );
+    console.log({ where });
     const [users, total] = await this.userRepository.findAndCount({
       where,
-      take,
-      skip,
+      take: takeUser,
+      skip: skipUser,
     });
 
     return {
       data: users,
       total,
-      take,
-      skip,
+      take: takeUser,
+      skip: skipUser,
     };
   }
 
@@ -69,7 +78,7 @@ export class UserService {
       throw new BadRequestException(BODYISEMPTY);
 
     const user = await this.findOne({ id });
-    if(!user) throw new NotFoundException(USERNOTFOUND);
+    if (!user) throw new NotFoundException(USERNOTFOUND);
 
     Object.assign(user, args);
 
@@ -78,9 +87,12 @@ export class UserService {
 
   async delete(id: number) {
     const user = await this.findOne({ id });
-    if(!user) throw new NotFoundException(USERNOTFOUND);
-      
+    if (!user) throw new NotFoundException(USERNOTFOUND);
+
     const [userErr] = await to(this.userRepository.delete({ id }));
-    if(!!userErr) throw new InternalServerErrorException(`${USERWASNOTDELETED} Details: ${userErr}`);
+    if (!!userErr)
+      throw new InternalServerErrorException(
+        `${USERWASNOTDELETED} Details: ${userErr}`,
+      );
   }
 }

@@ -19,6 +19,7 @@ config();
       logging: true,
       dropSchema: false,
       autoLoadEntities: true,
+      keepConnectionAlive: true
     }),
     UserModule,
   ],

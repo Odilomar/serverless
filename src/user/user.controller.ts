@@ -19,12 +19,8 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  async findAll(@Query() args: FindUserArgs) {
-    return this.userService.find({
-      take: args.take || DEFAULT_TAKE,
-      skip: args.skip || DEFAULT_SKIP,
-      ...args,
-    });
+  async findAll(@Query() args?: FindUserArgs) {
+    return this.userService.find(args);
   }
 
   @Get('/:id')
@@ -48,9 +44,7 @@ export class UserController {
 
   @HttpCode(204)
   @Delete('/:id')
-  async delete(    
-    @Param('id', ParseIntPipe) id: number,
-  ) {
+  async delete(@Param('id', ParseIntPipe) id: number) {
     return this.userService.delete(id);
   }
 }

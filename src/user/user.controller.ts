@@ -10,7 +10,7 @@ import {
   Query,
   ValidationPipe,
 } from '@nestjs/common';
-import { CreateUserArgs, FindUserArgs } from './user.args';
+import { CreateUserArgs, FindUserArgs, UpdateUserArgs } from './user.args';
 import { DEFAULT_SKIP, DEFAULT_TAKE, UserService } from './user.service';
 
 @Controller('user')
@@ -37,7 +37,12 @@ export class UserController {
   }
 
   @Put('/:id')
-  async update() {}
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() args: UpdateUserArgs,
+  ) {
+    return this.userService.update(id, args);
+  }
 
   @Delete('/:id')
   async delete() {}

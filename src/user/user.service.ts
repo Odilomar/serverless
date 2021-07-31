@@ -1,8 +1,12 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import to from 'await-to-js';
 import { FindConditions, ObjectLiteral, Repository } from 'typeorm';
-import { CreateUserArgs, FindUserArgs } from './user.args';
+import { CreateUserArgs, FindUserArgs, UpdateUserArgs } from './user.args';
 import { UserORM } from './user.entity';
 
 export const DEFAULT_TAKE = 5;
@@ -15,9 +19,7 @@ export class UserService {
     private readonly userRepository: Repository<UserORM>,
   ) {}
 
-  async create(args: CreateUserArgs) {
-    const user = this.userRepository.create({ ...args });
-
+  private async save(user: UserORM) {
     const [userError, userStored] = await to(this.userRepository.save(user));
     if (!!userError)
       throw new InternalServerErrorException(
@@ -25,6 +27,10 @@ export class UserService {
       );
 
     return userStored;
+  }
+
+  async create(args: CreateUserArgs) {
+    return this.save(this.userRepository.create({ ...args }));
   }
 
   async findOne(
@@ -54,5 +60,15 @@ export class UserService {
       take,
       skip,
     };
+  }
+
+  async update(id: number, args: UpdateUserArgs) {
+    if (Object.keys(args).length == 0)
+      throw new BadRequestException('Body is empty!');
+
+    const user = await this.findOne({ id });
+    Object.assign(user, args);
+
+    return this.save(user);
   }
 }

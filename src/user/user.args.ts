@@ -19,12 +19,7 @@ export class CreateUserArgs {
   cargo: string;
 }
 
-export class FindUserArgs {
-  @IsOptional()
-  @IsInt()
-  @Type(() => Number)
-  id: number;
-
+export class UpdateUserArgs {
   @IsOptional()
   @IsString()
   name: string;
@@ -37,6 +32,13 @@ export class FindUserArgs {
   @IsOptional()
   @IsString()
   cargo: string;
+}
+
+export class FindUserArgs extends UpdateUserArgs {
+  @IsOptional()
+  @IsInt()
+  @Type(() => Number)
+  id: number;
 
   @IsOptional()
   @IsInt()

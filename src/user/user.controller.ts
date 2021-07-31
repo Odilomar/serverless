@@ -7,17 +7,24 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  Query,
   ValidationPipe,
 } from '@nestjs/common';
-import { CreateUserArgs } from './user.args';
-import { UserService } from './user.service';
+import { CreateUserArgs, FindUserArgs } from './user.args';
+import { DEFAULT_SKIP, DEFAULT_TAKE, UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  async findAll() {}
+  async findAll(@Query() args: FindUserArgs) {
+    return this.userService.find({
+      take: args.take || DEFAULT_TAKE,
+      skip: args.skip || DEFAULT_SKIP,
+      ...args,
+    });
+  }
 
   @Get('/:id')
   async findOne(@Param('id', ParseIntPipe) id: number) {

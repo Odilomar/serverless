@@ -23,8 +23,12 @@ export class ValidationPipe implements PipeTransform {
     const object = plainToClass(metatype, value);
     const errors = await validate(object);
     if (errors.length > 0) {
-      const errorDetails = await Promise.all(errors.map(error => (JSON.stringify(error.constraints))));
-      throw new BadRequestException(`Validation Error. Details: ${errorDetails}`);
+      const errorDetails = await Promise.all(
+        errors.map((error) => JSON.stringify(error.constraints)),
+      );
+      throw new BadRequestException(
+        `Validation Error. Details: ${errorDetails}`,
+      );
     }
 
     return value;

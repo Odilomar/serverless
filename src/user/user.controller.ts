@@ -4,8 +4,10 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Post,
   Put,
+  ValidationPipe,
 } from '@nestjs/common';
 import { CreateUserArgs } from './user.args';
 import { UserService } from './user.service';
@@ -18,11 +20,12 @@ export class UserController {
   async findAll() {}
 
   @Get('/:id')
-  async findOne() {}
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.userService.findOne({ id });
+  }
 
   @Post()
   async create(@Body() user: CreateUserArgs) {
-    console.log({ user });
     return this.userService.create(user);
   }
 

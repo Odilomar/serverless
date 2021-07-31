@@ -1,7 +1,7 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import to from 'await-to-js';
-import { Repository } from 'typeorm';
+import { FindConditions, ObjectLiteral, Repository } from 'typeorm';
 import { CreateUserArgs } from './user.args';
 import { UserORM } from './user.entity';
 
@@ -22,5 +22,9 @@ export class UserService {
       );
 
     return userStored;
+  }
+
+  async findOne(where?: string | ObjectLiteral | FindConditions<UserORM> | FindConditions<UserORM>[]) {
+      return this.userRepository.findOne({ where })
   }
 }

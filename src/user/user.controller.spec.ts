@@ -17,7 +17,7 @@ describe('UserController', () => {
   });
 
   describe('findAll', () => {
-    it('should return an array of cats', async () => {
+    it('should return an array of users', async () => {
       const result = {
         data: [
           {
@@ -37,5 +37,55 @@ describe('UserController', () => {
 
       expect(await userController.findAll()).toBe(result);
     });
+  });  
+
+  describe('create', () => {
+    it('should create a user', async () => {
+      const result = {
+        id: 1,
+        name: "Odilomar",
+        idade: 24,
+        cargo: "Programador",
+        created_at: new Date,
+        updated_at: new Date,
+      }
+      jest.spyOn(userService, 'create').mockResolvedValue(result);
+
+      expect(await userController.create(result)).toBe(result);
+    });
   });
+
+  describe('findOne', () => {
+    it('should return an user', async () => {
+      const result = {
+        id: 1,
+        name: "Odilomar",
+        idade: 24,
+        cargo: "Programador",
+        created_at: new Date,
+        updated_at: new Date,
+      }
+      jest.spyOn(userService, 'findOne').mockResolvedValue(result);
+
+      expect(await userController.findOne(1)).toBe(result);
+    });
+  });
+
+  // describe('update', () => {
+  //   it('should return an array of users', async () => {
+  //     const result = {}
+  //     jest.spyOn(userService, 'find').mockResolvedValue(result);
+
+  //     expect(await userController.findAll()).toBe(result);
+  //   });
+  // });
+
+  // describe('delete', () => {
+  //   it('should return an array of users', async () => {
+  //     const result = {}
+  //     jest.spyOn(userService, 'find').mockResolvedValue(result);
+
+  //     expect(await userController.findAll()).toBe(result);
+  //   });
+  // });
 });

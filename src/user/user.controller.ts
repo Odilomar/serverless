@@ -8,9 +8,12 @@ import {
   Put,
 } from '@nestjs/common';
 import { CreateUserArgs } from './user.args';
+import { UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
+  constructor(private readonly userService: UserService) {}
+
   @Get()
   async findAll() {}
 
@@ -18,7 +21,10 @@ export class UserController {
   async findOne() {}
 
   @Post()
-  async create(@Body() user: CreateUserArgs) {}
+  async create(@Body() user: CreateUserArgs) {
+    console.log({ user });
+    return this.userService.create(user);
+  }
 
   @Put('/:id')
   async update() {}

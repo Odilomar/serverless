@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsInt, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateUserArgs {
   @IsNotEmpty()
@@ -6,7 +6,7 @@ export class CreateUserArgs {
   name: string;
 
   @IsNotEmpty()
-  @IsNumber()
+  @IsInt()
   idade: number;
 
   @IsNotEmpty()

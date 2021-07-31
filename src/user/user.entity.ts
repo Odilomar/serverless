@@ -1,4 +1,4 @@
-'reflect-metadata'
+'reflect-metadata';
 
 import {
   Column,

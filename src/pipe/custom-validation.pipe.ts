@@ -8,6 +8,7 @@ import {
 import { validate } from 'class-validator';
 import { plainToClass } from 'class-transformer';
 import to from 'await-to-js';
+import { CUSTOMVALIDATIONERROR } from './custom-validation.const';
 
 @Injectable()
 export class CustomValidationPipe
@@ -28,7 +29,7 @@ export class CustomValidationPipe
         errors.map((error) => JSON.stringify(error.constraints)),
       );
       throw new BadRequestException(
-        `Validation Error. Details: ${errorDetails}`,
+        `${CUSTOMVALIDATIONERROR} Details: ${errorDetails}`,
       );
     }
 

@@ -2,11 +2,13 @@ import {
   BadRequestException,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import to from 'await-to-js';
 import { FindConditions, ObjectLiteral, Repository } from 'typeorm';
 import { CreateUserArgs, FindUserArgs, UpdateUserArgs } from './user.args';
+import { BODYISEMPTY, USERNOTFOUND, USERWASNOTDELETED, USERWASNOTSAVED } from './user.const';
 import { UserORM } from './user.entity';
 
 export const DEFAULT_TAKE = 5;
@@ -23,7 +25,7 @@ export class UserService {
     const [userError, userStored] = await to(this.userRepository.save(user));
     if (!!userError)
       throw new InternalServerErrorException(
-        `User was not saved. Details: ${userError}`,
+        `${USERWASNOTSAVED} Details: ${userError}`,
       );
 
     return userStored;
@@ -64,10 +66,10 @@ export class UserService {
 
   async update(id: number, args: UpdateUserArgs) {
     if (Object.keys(args).length == 0)
-      throw new BadRequestException('Body is empty!');
+      throw new BadRequestException(BODYISEMPTY);
 
     const user = await this.findOne({ id });
-    if(!user) throw new BadRequestException('User does not exists!');
+    if(!user) throw new NotFoundException(USERNOTFOUND);
 
     Object.assign(user, args);
 
@@ -76,9 +78,9 @@ export class UserService {
 
   async delete(id: number) {
     const user = await this.findOne({ id });
-    if(!user) throw new BadRequestException('User does not exists!');
+    if(!user) throw new NotFoundException(USERNOTFOUND);
       
     const [userErr] = await to(this.userRepository.delete({ id }));
-    if(!!userErr) throw new InternalServerErrorException(`User was not deleted. Details: ${userErr}`);
+    if(!!userErr) throw new InternalServerErrorException(`${USERWASNOTDELETED} Details: ${userErr}`);
   }
 }

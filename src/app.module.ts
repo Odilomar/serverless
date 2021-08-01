@@ -15,6 +15,7 @@ config();
       password: String(process.env.DB_PASS),
       database: String(process.env.DB_NAME),
       entities: [__dirname + '../**/*.entity{.ts,.js}'],
+      ssl: true,
       synchronize: true,
       logging: true,
       dropSchema: false,

@@ -20,12 +20,12 @@ describe('UserController', () => {
     it('should create a user', async () => {
       const result = {
         id: 1,
-        name: "Odilomar",
+        name: 'Odilomar',
         idade: 24,
-        cargo: "Programador",
-        created_at: new Date,
-        updated_at: new Date,
-      }
+        cargo: 'Programador',
+        created_at: new Date(),
+        updated_at: new Date(),
+      };
       jest.spyOn(userService, 'create').mockResolvedValue(result);
       expect(await userController.create(result)).toBe(result);
     });
@@ -58,11 +58,11 @@ describe('UserController', () => {
     it('should return an user', async () => {
       const result = {
         id: 1,
-        name: "Odilomar",
+        name: 'Odilomar',
         idade: 24,
-        cargo: "Programador",
-        created_at: new Date,
-        updated_at: new Date,
+        cargo: 'Programador',
+        created_at: new Date(),
+        updated_at: new Date(),
       };
       jest.spyOn(userService, 'findOne').mockResolvedValue(result);
 
@@ -74,15 +74,17 @@ describe('UserController', () => {
     it('should update a user', async () => {
       const result = {
         id: 1,
-        name: "Odilomar",
+        name: 'Odilomar',
         idade: 24,
-        cargo: "Programador",
-        created_at: new Date,
-        updated_at: new Date,
-      }
+        cargo: 'Programador',
+        created_at: new Date(),
+        updated_at: new Date(),
+      };
       jest.spyOn(userService, 'update').mockResolvedValue(result);
 
-      expect(await userController.update(result.id, { ...result })).toBe(result);
+      expect(await userController.update(result.id, { ...result })).toBe(
+        result,
+      );
     });
   });
 

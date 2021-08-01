@@ -5,10 +5,11 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "main": "src/main.ts",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsc -p tsconfig.build.json",
-    "build:nest": "nest build",
+    "build:nest": "npm run prebuild && nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "tsc-watch -p tsconfig.build.json --onSuccess \"node dist/main.js\"",

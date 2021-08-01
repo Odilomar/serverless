@@ -1,23 +1,6 @@
 {
     "version": "4.3.5",
-    "compilerOptions": {
-        "module": "commonjs",
-        "declaration": true,
-        "removeComments": true,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "allowSyntheticDefaultImports": true,
-        "target": "es2017",
-        "sourceMap": true,
-        "outDir": "./dist",
-        "baseUrl": "./",
-        "rootDir": "./src",
-        "incremental": true,
-        "esModuleInterop": true,
-        "skipLibCheck": true,
-        // "tsBuildInfoFile": "tsconfig.build.json",
-        // "allowJs": true,
-    },
+    "extends": "./tsconfig.json",
     "exclude": [
         "node_modules",
         "dist"

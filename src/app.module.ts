@@ -1,12 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { config } from 'dotenv';
-import path from 'path/posix';
-import { UserModule } from './user/user.module';
+import { UserModule } from './user/user.module.js';
 
 config();
 
-const { DB_HOST, DB_PORT, DB_USER, DB_PASS, DB_NAME, SSL_CERT, SSL_KEY } = process.env;
+const { DB_HOST, DB_PORT, DB_USER, DB_PASS, DB_NAME } = process.env;
 
 @Module({
   imports: [

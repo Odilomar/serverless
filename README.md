@@ -43,7 +43,7 @@ You are now ready to launch the NestJS application using the command below.
 npm run start:dev or yarn start:dev
 ```
 
-You can now head to `http://localhost:4000/docs` and see your API Swagger docs.
+You can now head to `http://localhost:3000/` and see your API Swagger docs.
 
 ## 2. Endpoints
 

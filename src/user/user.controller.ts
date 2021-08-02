@@ -11,9 +11,11 @@ import {
   Query,
   ValidationPipe,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { CreateUserArgs, FindUserArgs, UpdateUserArgs } from './user.args';
 import { DEFAULT_SKIP, DEFAULT_TAKE, UserService } from './user.service';
 
+@ApiTags('User')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}

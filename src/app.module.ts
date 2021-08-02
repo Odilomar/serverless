@@ -17,9 +17,9 @@ const { DB_HOST, DB_PORT, DB_USER, DB_PASS, DB_NAME } = process.env;
       password: String(DB_PASS),
       database: String(DB_NAME),
       entities: [__dirname + '../**/*.entity{.ts,.js}'],
-      ssl: {
-        rejectUnauthorized: false,
-      },
+      // ssl: {
+      //   rejectUnauthorized: false,
+      // },
       synchronize: true,
       logging: true,
       dropSchema: false,

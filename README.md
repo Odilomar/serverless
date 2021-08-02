@@ -75,3 +75,13 @@ You can now head to `http://localhost:3000/` and see your API Swagger docs.
 - DELETE /user/:id : Endpoint to delete user
   - Param:
     - id: number;
+
+## 3. Development
+
+During de development of this project, i had some issues and decided to describe below:
+
+* I´ve had some problems to deploy in AWS Lambda with user.module imports and couldn't finish it in time;
+  * I try to look for this and fix it in time, but i don't understand where is the import problem;
+
+* I began to study unit and e-2-e tests recently. That's why i didn´t perform as well in this "feature";
+  * I´m still looking for this subjects;

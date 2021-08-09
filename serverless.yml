@@ -1,21 +1,46 @@
-service: 
+service:
   name: serverless
 
 provider:
   name: aws
   runtime: nodejs14.x
   region: us-east-2
-  stage: dev
-  
+  stage: ${opt:stage,'local'}
+
 plugins:
- - serverless-plugin-optimize
- - serverless-dotenv-plugin
- - serverless-offline
- - serverless-plugin-warmup
+  - serverless-plugin-optimize
+  - serverless-dotenv-plugin
+  - serverless-offline
+  - serverless-plugin-warmup
+
+environment:
+  DB_HOST: ${self:custom.DB_HOST.${self:provider.stage}}
+  DB_USER: ${self:custom.DB_USER.${self:provider.stage}}
+  DB_PASS: ${self:custom.DB_PASS.${self:provider.stage}}
+  DB_NAME: ${self:custom.DB_NAME.${self:provider.stage}}
+  DB_PORT: ${self:custom.DB_PORT.${self:provider.stage}}
 
 custom:
   warmup:
     enable: true
+  stages:
+    - local
+    - dev
+  DB_HOST:
+    local: localhost
+    dev: ec2-34-194-130-103.compute-1.amazonaws.com
+  DB_USER:
+    local: postgres
+    dev: tvlaxiqiynytmd
+  DB_PASS:
+    local: postgres
+    dev: 7f428d4c422bdb44333e44d13135455906d5269b8a8a7cca52826383a9feeef9
+  DB_NAME:
+    local: serverless
+    dev: dbuuttfua9j26c
+  DB_PORT:
+    local: '5432'
+    dev: '5432'
 
 package:
   individually: true
@@ -29,7 +54,7 @@ package:
   excludeDevDependencies: true
 
 functions:
-  user:
+  proxy:
     handler: dist/serverless.handler
     events:
       - http:
